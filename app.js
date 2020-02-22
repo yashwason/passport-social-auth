@@ -10,8 +10,7 @@ const express = require(`express`),
     mongoose = require(`mongoose`),
     session = require(`express-session`),
     flash = require(`connect-flash`),
-    MongoStore = require(`connect-mongo`)(session),
-    passport = require(`passport`);
+    MongoStore = require(`connect-mongo`)(session);
 
 
 // DB setup
@@ -27,10 +26,6 @@ app.use(helmet.noSniff());
 app.use(helmet.permittedCrossDomainPolicies());
 app.use(helmet.referrerPolicy({ policy: `no-referrer-when-downgrade` }));
 app.use(helmet.xssFilter());
-
-
-// Passport Configuration
-require(`./config/passport`);
 
 
 // App setup
@@ -49,8 +44,6 @@ app.use(session({
     cookie: {maxAge: 2 * 24 * 60 * 60 * 1000} // 3 days
 }));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
 if(process.env.MODE.toLowerCase() === `dev`){
     app.use(morgan(':method :url - :status - :response-time ms')); // logging http activity
@@ -75,9 +68,7 @@ if(process.env.MODE === `prod`){
             return res.status(status).json({ errors: [{ msg: message, stack }] });
         }
         else{
-            return res.render(`error`, {
-                docTitle: `Page Not Found`,
-            });
+            return res.status(400).send(`404 - This Page Doesn't Exist`);
         }
     });
 }
