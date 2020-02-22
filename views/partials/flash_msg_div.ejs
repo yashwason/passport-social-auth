@@ -1,0 +1,14 @@
+<% if(errMsgs.length > 0){ %>
+<div id="error-msgs">
+    <% errMsgs.forEach((msg) => { %>
+    <p><%= msg %></p>
+    <% }); %>
+</div>
+<% } %>
+<% if(successMsgs.length > 0){ %>
+<div id="success-msgs">
+    <% successMsgs.forEach((msg) => { %>
+    <p><%= msg %></p>
+    <% }); %>
+</div>
+<% } %>

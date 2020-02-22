@@ -1,0 +1,42 @@
+<div class="product-card">
+    <div class="image-wrapper">
+        <div class="tag non-veg">
+            <span class="circle"></span>
+        </div>
+
+        <div class="icon-wishlist"></div>
+        <img class="lazy" src="" data-src="https://b.zmtcdn.com/data/dish_photos/23f/13c7492caa77af69adec2c9c0a26423f.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A<%# product.images[0] %>" alt="image of <%# product.title %>">
+    </div>
+
+    <div class="info-wrapper">
+        <h4 class="title">I'm The One Pizza<%# product.title %></h4>
+        <p class="desc">English Cheddar, Mozzarella, Parmesan, Smoked Cheese, Mushrooms, Onions, Corn, Bell Pepper</p>
+
+        <div class="bottom-container">
+            <section class="price">
+                <%# if(product.sale && product.limited){ %>
+                <!-- <p class="price">
+                    Rs.<span class="original"><%# product.price %></span>
+                    <span class="discounted"> Rs.<%# product.discounted_price %> & </span>
+                    <span class="limited">Limited!</span>
+                </p> -->
+                <%# } else if(product.sale && !product.limited){ %>
+                <!-- <p class="price">
+                    Rs.<span class="original"><%# product.price %></span>
+                    <span class="discounted"> Rs.<%# product.discounted_price %></span>
+                </p> -->
+                <%# } else if (!product.sale && product.limited) { %>
+                <!-- <p class="price">
+                    Rs.<%# product.price %> <span class="limited">Limited!</span>
+                </!-->
+                <%# } else if (!product.sale && !product.limited){ %>
+                <p class="price">Rs.749/-<%# product.price %></p>
+                <%# } %>
+            </section>
+            <section class="actions">
+                <button class="add-to-cart btn3">Add To Cart</button>
+                <small>customisable</small>
+            </section>
+        </div>
+    </div>
+</div>

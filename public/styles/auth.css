@@ -1,0 +1,107 @@
+/* /login page */
+.login-wrapper,
+.signup-wrapper{
+    padding: var(--whitespace);
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+.login-wrapper > form,
+.signup-wrapper > form{
+    display: block;
+    width: 500px;
+}
+.login-wrapper .addit-actions{
+    margin-top: 80px;
+}
+.login-wrapper .addit-actions *{
+    cursor: pointer;
+}
+.login-wrapper .addit-actions span{
+    display: inline-block;
+    margin: 0 20px 20px 0;
+}
+.login-wrapper > img,
+.signup-wrapper > img{
+    width: 350px;
+    margin: 0 auto;
+    display: block;
+    border: 3px solid var(--black);
+}
+
+#forgot-modal{
+    top: 30%;
+}
+
+#forgot-modal form{
+    display: block;
+}
+#forgot-modal input{
+    display: block;
+    margin: 25px 0;
+    border: none;
+    display: block;
+}
+
+.signup-wrapper > h1{
+    grid-column: span 2;
+}
+
+.reset{
+    padding: var(--whitespace);
+}
+.reset > h1{
+    text-align: center;
+}
+.reset form{
+    display: block;
+    width: 500px;
+    margin: 0 auto;
+}
+
+
+/* MEDIA QUERIES */
+@media (max-width: 1100px){
+    .login-wrapper,
+    .signup-wrapper{
+        display: block;
+    }
+    
+    .login-wrapper > img,
+    .signup-wrapper > img{
+        display: none;
+    }
+}
+
+@media (max-width: 1000px){
+    .signup-wrapper{
+        padding: var(--whitespace);
+    }
+    .signup-wrapper > form{
+        width: 100%;
+    }
+}
+
+@media (max-width: 750px){
+    #forgot-modal{
+        width: 90%;
+    }
+}
+
+@media (max-width: 700px){
+    .login-wrapper > form{
+        width: 100%;
+        margin: 35px auto 60px;
+    }
+}
+
+@media (max-width: 650px){
+    .signup-wrapper > form{
+        display: block;
+    }
+
+    .reset form{
+        width: 100%;
+    }
+}

@@ -1,0 +1,54 @@
+<%- include ../partials/head %>
+
+<link rel="stylesheet" href="/styles/auth.css" type="text/css">
+
+<%- include ../partials/header %>
+
+<%- include ../partials/head-end %>
+
+<div class="login-wrapper">
+    <form action="/login" method="post">
+        <h1>Log into POMP</h1>
+
+        <section>
+            <label for="email">Email Address:</label>
+            <input type="email" name="email" id="email" placeholder="Enter registered email address" required>
+        </section>
+        <section>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" minlength="7" placeholder="Only numbers and letters allowed" required>
+        </section>
+        <section class="btn-wrapper">
+            <button type="submit" class="btn2">Login</button>
+        </section>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" readonly>
+        
+        <div class="addit-actions">
+            <span id="forgot-password" style="text-decoration: underline;">Reset Password</span>
+            <strong><a href="/register" class="btn1">Create a New Account</a></strong>
+        </div>
+    </form>
+    
+    <img src="https://scontent.fdel13-1.fna.fbcdn.net/v/t31.0-8/30420097_1294097994054092_5742171852757201129_o.jpg?_nc_cat=101&_nc_oc=AQnnRvGWvRhur937VM0OY9qRp6-pPKy-jHmYXA8d8MEQTdA3PrHffahKpXwr5iDa9wUZBhrRsH-R98dao1VqAIHk&_nc_ht=scontent.fdel13-1.fna&oh=9110080f153747562fd5292a463c24bc&oe=5E4F359B" alt="">
+</div>
+
+<div id="forgot-modal" class="modal">
+    <div class="close">
+        <img src="/images/common/icons/close-white.png" alt="EXIT">            
+    </div>
+    <h4>Enter your registered email to receive a password reset link</h4>
+
+    <form action="/forgot" method="post">
+        <input type="email" name="forgot_email" id="forgot_email" placeholder="Enter valid registered email" required>
+        <button type="submit" class="btn2">Receive Reset Link</button>
+
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" readonly>
+    </form>
+</div>
+
+
+<%- include ../partials/footer %>
+
+<script src="/scripts/login-bundle.js"></script>
+
+<%- include ../partials/end %>
