@@ -1,5 +1,6 @@
 const passport = require(`passport`),
     GoogleStrategy = require(`passport-google-oauth2`).Strategy,
+    FacebookStrategy = require(`passport-facebook`),
     User = require(`../models/user`);
 
     
@@ -48,3 +49,35 @@ passport.use(new GoogleStrategy({
         return done(err);
     }
 }));
+
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    profileFields: [`id`, `displayName`,`email`],
+    callbackURL: `/auth/facebook/redirect`
+}, (async (accessToken, refreshToken, profile, done) => {
+    // check if user already exists in our own db
+    try{
+        const currentUser = await User.findOne({facebook_id: profile.id});
+
+        if(currentUser){
+            // already have this user
+            return done(null, currentUser, { message: `Welcome back ${currentUser.name}!` });
+        }
+        else{
+            // if not, create user in our db
+            const newUser = await User.create({
+                facebook_id: profile.id,
+                email: profile.emails[0].value,
+                name: profile.displayName,
+                active: true
+            }, { new: true });
+            done(null, newUser, { message: `Welcome to the family ${newUser.name}!` });
+        }
+    }
+    catch(err){
+        console.log(err);
+        return done(err);
+    }
+})));
