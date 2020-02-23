@@ -14,7 +14,7 @@ authMiddleware.notLoggedIn,
 
 
 // User profile routes
-router.get(`/profile/`,
+router.get(`/profile`,
 authMiddleware.isLoggedIn,
 (req, res) => {
     res.render(`profile`, {

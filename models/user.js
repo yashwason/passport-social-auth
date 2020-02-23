@@ -4,31 +4,40 @@ const UserSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		trim: true,
-		require: true
+		required: true
 	},
 	email: {
 		type: String,
 		trim: true,
-		unique: true,
-		required: true
+		unique: true
 	},
 	active: {
 		type: Boolean,
-		default: 0
+		default: false
 	},
-	google_id: {
+	googleid: {
 		type: String,
 		trim: true,
-		unique: true
 	},
-	facebook_id: {
+	facebookid: {
 		type: String,
-		trim: true,
-		unique: true
+		trim: true
 	}
 }, {
 	timestamps: true,
-	new: true
+	strict: false
+});
+
+
+UserSchema.pre(`save`, function(next){
+	console.log(this);
+    if(this.email || this.googleid || this.facebookid){
+		console.log(`email or googleid or facebookid is present!`);
+		next();
+	}
+	else{
+		next(new Error(`Invalid credentials! Provide email or login via. social media`));
+	}
 });
 
 

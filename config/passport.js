@@ -5,7 +5,7 @@ const passport = require(`passport`),
 
     
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user._id)
 });
 
 passport.deserializeUser((id, done) => {
@@ -27,21 +27,28 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     // check if user already exists in our own db
     try{
-        const currentUser = await User.findOne({google_id: profile.id});
+        const currentUser = await User.findOne(
+            {$or:[ 
+                { googleid: profile.id },
+                { email: profile.email } 
+        ]});
 
         if(currentUser){
             // already have this user
+            if(!currentUser.googleid){
+                await User.findOneAndUpdate({email:currentUser.email}, {googleid:profile.id});
+            }
             return done(null, currentUser, { message: `Welcome back ${currentUser.name}!` });
         }
         else{
             // if not, create user in our db
-            const newUser = await User.create({
-                google_id: profile.id,
-                email: profile.email,
+            const newUser = await new User({
                 name: profile.displayName,
+                email: profile.email,
+                googleid: profile.id,
                 active: profile.email_verified
-            }, { new: true });
-            done(null, newUser, { message: `Welcome to the family ${newUser.name}!` });
+            }).save();
+            return done(null, newUser, { message: `Welcome to the family ${newUser.name}!` });
         }
     }
     catch(err){
@@ -59,21 +66,28 @@ passport.use(new FacebookStrategy({
 }, (async (accessToken, refreshToken, profile, done) => {
     // check if user already exists in our own db
     try{
-        const currentUser = await User.findOne({facebook_id: profile.id});
+        const currentUser = await User.findOne(
+            {$or:[ 
+                { facebookid: profile.id },
+                { email: profile.emails[0].value } 
+        ]});
 
         if(currentUser){
             // already have this user
+            if(!currentUser.facebookid){
+                await User.findOneAndUpdate({email:currentUser.email}, {facebookid:profile.id});
+            }
             return done(null, currentUser, { message: `Welcome back ${currentUser.name}!` });
         }
         else{
             // if not, create user in our db
-            const newUser = await User.create({
-                facebook_id: profile.id,
+            const newUser = await new User({
+                facebookid: profile.id,
                 email: profile.emails[0].value,
                 name: profile.displayName,
                 active: true
-            }, { new: true });
-            done(null, newUser, { message: `Welcome to the family ${newUser.name}!` });
+            }).save();
+            return done(null, newUser, { message: `Welcome to the family ${newUser.name}!` });
         }
     }
     catch(err){

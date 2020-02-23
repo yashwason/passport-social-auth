@@ -45,9 +45,9 @@ app.use(session({
     resave: false,
     store: new MongoStore({
         mongooseConnection: mongoose.connection,
-        ttl: 3 * 24 * 60 * 60 // 3 days
+        ttl: 20 * 60 // 20 seconds
     }),
-    cookie: {maxAge: 2 * 24 * 60 * 60 * 1000} // 3 days
+    cookie: {maxAge: 20 * 1000} // 20 seconds
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -57,22 +57,6 @@ app.use(passport.session());
 // Routes
 const routes = require(`./routes/_all`);
 app.use(routes);
-
-
-app.use((err, req, res, next) => {
-    console.log(err);
-    const stack = null;
-    const type = req.get(`content-type`);
-    const status = err.status || 500;
-    const message = status === 404 ? err.message : `Oops! Something is wrong`;
-
-    if (type && type.toLowerCase().includes(`json`)) {
-        return res.status(status).json({ errors: [{ msg: message, stack }] });
-    }
-    else{
-        return res.status(400).send(`404 - This Page Doesn't Exist`);
-    }
-});
 
 
 // Server setup
