@@ -12,18 +12,19 @@ const UserSchema = new mongoose.Schema({
 		unique: true,
 		required: true
 	},
-	contact: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	admin: {
-		type: Boolean,
-		default: 0
-	},
 	active: {
 		type: Boolean,
 		default: 0
+	},
+	google_id: {
+		type: String,
+		trim: true,
+		unique: true
+	},
+	facebook_id: {
+		type: String,
+		trim: true,
+		unique: true
 	}
 }, {
 	timestamps: true,

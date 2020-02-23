@@ -11,11 +11,3 @@ exports.notLoggedIn = (req, res, next) => {
     req.flash(`error`, `Cannot go there when logged in!`);
     return res.redirect(`back`);
 };
-
-exports.isAdmin = (req, res, next) => {
-    if(req.isAuthenticated() && req.user.admin){
-        return next();
-    }
-
-    res.redirect(`/shop`);
-};

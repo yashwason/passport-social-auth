@@ -15,11 +15,14 @@ router.use((req, res, next) => {
 });
 
 // Routes
-const indexRoutes = require(`./index`);
+const indexRoutes = require(`./index`),
+    authRoutes = require(`./auth/_all`);
 
 router.use(indexRoutes);
+router.use(`/auth`, authRoutes);
 router.use((req, res, next) => {
     return res.status(400).send(`404 - This Page Doesn't Exist`);
 });
+
 
 module.exports = router;

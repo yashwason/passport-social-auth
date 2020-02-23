@@ -1,0 +1,14 @@
+<%- include ./partials/head %>
+
+<%- include ./partials/head-end %>
+
+<div class="profile-page">
+    <header>
+        <a href="/auth/logout">Logout</a>
+    </header>
+
+    <h1>Hey <%= currentUser.name %>!</h1>
+    <main>This is the secret page. Only accessible when logged in.</main>
+</div>
+
+<%- include ./partials/end %>
